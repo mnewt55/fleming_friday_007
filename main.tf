@@ -15,6 +15,32 @@ zone = "us-west2-b"
 credentials = "expanded-stone-416701-cd04e24d3d1e.json"
 }
 
+resource "google_compute_network" "auto-vpc-tf" {
+  name = "auto-vpc-tf"
+  auto_create_subnetworks = false
+}
+
+resource "google_compute_subnetwork" "sub-sg" {
+  name ="sub-sg"
+  network = google_compute_network.auto-vpc-tf.id
+  ip_cidr_range = "10.145.1.0/24"
+  region = "us-west2"
+}
+
+
+#resource "google_compute_network" "custom-vpc-tf" {
+  #name = "custom-vpc-tf"
+ #auto_create_subnetworks = false
+#}
+
+output "auto" {
+  value = google_compute_network.auto-vpc-tf.id
+}
+
+#output "custom" {
+#  value = google_compute_network.custom-vpc-tf.id
+#}
+
 
 resource "google_storage_bucket" "vegeta-bucket-1" {
   name          = "z_warriors_bucket_09"
